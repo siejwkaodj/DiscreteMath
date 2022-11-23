@@ -6,6 +6,8 @@ import java.lang.reflect.Array;
 import java.util.*;
 
 public class Dijkstra{
+    // Node 클래스 만들어서 { weight, idx } 형식의 자료형을 우선순위큐에 넣을 수 있도록 함.
+    // 크기가 2로 고정되는 1차원배열을 한 번에 만들기 쉽지 않았기 때문. compareTo도 직접 만들어 줄 수도 있고.
     public class Node implements Comparable<Node>{
         private int idx, weight;
         Node(int idx, int weight) {this.idx = idx; this.weight = weight;}
@@ -19,8 +21,6 @@ public class Dijkstra{
         }
     }
     private int n;
-    private static Scanner scan = new Scanner(System.in);
-
     // field variables
     private final int INF = Integer.MAX_VALUE;
     private int[][] node;
@@ -28,34 +28,10 @@ public class Dijkstra{
     private boolean[] visited;
     private ArrayList<Integer>[] routes;
 
-    // constructor
-    Dijkstra(){
-        this.node = new int[][]
-            {
-                {0, 20, 0, 30, 0, 0},
-                {0, 0, 20, 0, 40, 0},
-                {0, 0, 0, 0, 0, 20},
-                {0, 0, 20, 0, 20, 30},
-                {0, 0, 0, 0, 0, 10},
-                {0, 0, 0, 0, 0, 0}
-            };
-    /*
-            {
-                {0, 10, 0, 30, 100},
-                {0, 0, 50, 0, 0},
-                {0, 0, 0, 0, 10},
-                {0, 0, 20, 0, 60},
-                {0, 0, 0, 0, 0}
-            };
-                {
-                {0, 7, 4, 6, 1},
-                {0, 0, 0, 0, 0},
-                {0, 2, 0, 5, 0},
-                {0, 3, 0, 0, 0},
-                {0, 0, 0, 1, 0}
-            };
-             */
-        //input2reader(); // 인접행렬 초기화
+    // constructor - 한 번에 하나의 인접 행렬을 받아옴,
+    // 인접 행렬 여러개면 for문으로 돌리면서 각 반복에서 Dijkstra d = new Dijkstra(array); 형식으로 받아올 것.
+    Dijkstra(int[][] array){
+        this.node = array;          // 인접행렬 초기화
         this.n = node.length;       // n 받아옴
         this.visited = new boolean[n];
         // route 초기화 -> 일단 빈 int 리스트로, 시작 인덱스는 {0}으로
@@ -92,8 +68,13 @@ public class Dijkstra{
     ArrayList<Integer> shortestPath(int end){
         return routes[end - 1];
     }
-
+    ArrayList<Integer>[] getRoutes(){
+        return routes;
+    }
     int pathLength(int end){
         return dist[end - 1];
+    }
+    int[] getDist(){
+        return dist;
     }
 }
