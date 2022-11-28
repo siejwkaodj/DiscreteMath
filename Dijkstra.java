@@ -20,13 +20,13 @@ public class Dijkstra{
             return this.weight - o.weight;
         }
     }
-    private int n;
+    private int n;  // 인접행렬 배열 크기 정보 저장
     // field variables
-    private final int INF = Integer.MAX_VALUE;
-    private int[][] node;
-    private int[] dist;
-    private boolean[] visited;
-    private ArrayList<Integer>[] routes;
+    private final int INF = Integer.MAX_VALUE;  // INF값 저장, int 최대형으로 저장함.
+    private int[][] node;                       // 인접행렬 저장
+    private int[] dist;                         // 최단경로 길이 정보 저장
+    private boolean[] visited;                  // 방문 노드 정보 저장
+    private ArrayList<Integer>[] routes;        // 각 노드로 가는 최단 경로 노드들 저장, int[] 배열을 요소로 가지는 ArrayList<Integer>[] 형
 
     // constructor - 한 번에 하나의 인접 행렬을 받아옴,
     // 인접 행렬 여러개면 for문으로 돌리면서 각 반복에서 Dijkstra d = new Dijkstra(array); 형식으로 받아올 것.
@@ -43,10 +43,9 @@ public class Dijkstra{
         Arrays.fill(dist, INF);
     }
 
-    // static PriorityQueue<ArrayList<Integer>>
     // solving
     void dijkstra(){
-        PriorityQueue<Node> pqueue = new PriorityQueue<>();
+        PriorityQueue<Node> pqueue = new PriorityQueue<>(); // 우선순위 큐 이용해서 알고리즘 구현함
         pqueue.add(new Node(0, 0));
         dist[0] = 0;
         while(!pqueue.isEmpty()){
@@ -64,16 +63,19 @@ public class Dijkstra{
             }
         }
     }
-
+    // 끝점을 입력받으면 최단경로 노드들 정보 반환
     ArrayList<Integer> shortestPath(int end){
         return routes[end - 1];
     }
+    // 전체 최단경로 노드 정보 반환
     ArrayList<Integer>[] getRoutes(){
         return routes;
     }
+    // 끝점 입력받으면 최단경로 길이 정보 반환
     int pathLength(int end){
         return dist[end - 1];
     }
+    // 전체 최단경로 길이 정보 반환
     int[] getDist(){
         return dist;
     }
